@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>JavaScript Quiz App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./src/output.css">
+
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-900 text-white min-h-screen flex items-center justify-center">
+
+  <div class="bg-slate-800 w-[350px] p-6 rounded-xl shadow-xl">
+
+    <h1 class="text-2xl font-bold text-center mb-4">Quiz App</h1>
+
+    <div id="quiz-box">
+      <p id="question" class="text-lg mb-4"></p>
+
+      <div id="options" class="space-y-2"></div>
+
+      <button id="nextBtn"
+        class="hidden mt-4 w-full bg-green-600 hover:bg-green-500 py-2 rounded">
+        Next Question
+      </button>
+    </div>
+
+    <div id="result-box" class="hidden text-center">
+      <h2 class="text-xl font-semibold mb-3">Quiz Completed 🎉</h2>
+      <p id="scoreText" class="mb-4"></p>
+      <button onclick="restartQuiz()"
+        class="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded">
+        Restart Quiz
+      </button>
+    </div>
+
+  </div>
+
+<script>
+  const questions = [
+    {
+      question: "What does JS stand for?",
+      options: ["Java Source", "JavaScript", "Just Script", "JSON Script"],
+      answer: 1
+    },
+    {
+      question: "Which keyword declares a constant?",
+      options: ["var", "let", "const", "define"],
+      answer: 2
+    },
+    {
+      question: "Which symbol is used for comments?",
+      options: ["<!-- -->", "//", "#", "**"],
+      answer: 1
+    },
+    {
+      question: "Which method selects multiple elements?",
+      options: ["getElementById", "querySelector", "querySelectorAll", "getElements"],
+      answer: 2
+    }
+  ];
+
+  let index = 0;
+  let score = 0;
+
+  const questionEl = document.getElementById("question");
+  const optionsEl = document.getElementById("options");
+  const nextBtn = document.getElementById("nextBtn");
+  const resultBox = document.getElementById("result-box");
+  const quizBox = document.getElementById("quiz-box");
+  const scoreText = document.getElementById("scoreText");
+
+  function loadQuestion() {
+    nextBtn.classList.add("hidden");
+    optionsEl.innerHTML = "";
+
+    const q = questions[index];
+    questionEl.textContent = q.question;
+
+    q.options.forEach((option, i) => {
+      const btn = document.createElement("button");
+      btn.textContent = option;
+      btn.className =
+        "w-full bg-slate-700 hover:bg-slate-600 py-2 rounded";
+      btn.onclick = () => checkAnswer(i, btn);
+      optionsEl.appendChild(btn);
+    });
+  }
+
+  function checkAnswer(selected, button) {
+    const correct = questions[index].answer;
+
+    Array.from(optionsEl.children).forEach(btn => btn.disabled = true);
+
+    if (selected === correct) {
+      button.classList.add("bg-green-600");
+      score++;
+    } else {
+      button.classList.add("bg-red-600");
+      optionsEl.children[correct].classList.add("bg-green-600");
+    }
+
+    nextBtn.classList.remove("hidden");
+  }
+
+  nextBtn.onclick = () => {
+    index++;
+    if (index < questions.length) {
+      loadQuestion();
+    } else {
+      showResult();
+    }
+  };
+
+  function showResult() {
+    quizBox.classList.add("hidden");
+    resultBox.classList.remove("hidden");
+    scoreText.textContent = `Your Score: ${score} / ${questions.length}`;
+  }
+
+  function restartQuiz() {
+    index = 0;
+    score = 0;
+    resultBox.classList.add("hidden");
+    quizBox.classList.remove("hidden");
+    loadQuestion();
+  }
+
+  loadQuestion();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz-app</title>
+    <link rel="stylesheet" href="./src/output.css">
+    <link rel="stylesheet" href="styles.css">
+    
+</head>
+<body class="bg-slate-900 text-white min-h-screen flex flex-row justify-center items-center ">
+    
+    <div class="w-[350px] p-6 bg-slate-800 text-blue  rounded-xl shadow-4xl hover:scale-102">
+        
+        <h1 class="text-2xl text-center font-bold mb-4">Quiz App</h1>
+
+        <div id="quiz-box">
+            <p id="question" class="text-lg mb-4"></p>
+            <div id="options" class="space-y-2"></div>
+        </div>
+
+        <button id="nextBtn" class=" hidden mt-4 w-full bg-green-600 hover:bg-green-500 py-2 rounded-xl hover:scale-104 transition-all 0.3s ease-in-out">
+            Next Question
+        </button>
+
+        <!-- Result Box -->
+         <div id="result-box" class=" hidden text-center">
+            <h2 class="text-xl font-semibold mb-3">Quiz Completed 🎉</h2>
+            <p id="scoreText" class="mb-4"></p>
+            <button onclick="restartQuiz()" class="bg-blue-600 hover:bg-blue-500 hover:scale-103 px-4 py-2 rounded-xl">Restart Quiz</button>
+         </div>
+         
+    </div>
+
+    <script src="./scripts.js"></script>
+</body>
+</html>
