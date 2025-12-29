@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Password Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-900 text-white min-h-screen flex items-center justify-center">
+
+<div class="bg-slate-800 w-[380px] p-6 rounded-xl shadow-xl">
+
+  <h1 class="text-2xl font-bold text-center mb-4">Password Generator</h1>
+
+  <!-- Output -->
+  <div class="flex mb-3">
+    <input id="password"
+      readonly
+      class="flex-1 px-3 py-2 rounded-l text-black outline-none">
+    <button onclick="copyPassword()"
+      class="bg-green-600 px-3 rounded-r">Copy</button>
+  </div>
+
+  <!-- Length -->
+  <div class="mb-4">
+    <label>Password Length: <span id="lengthValue">12</span></label>
+    <input id="length"
+      type="range"
+      min="4"
+      max="32"
+      value="12"
+      class="w-full"
+      oninput="updateLength()">
+  </div>
+
+  <!-- Options -->
+  <div class="space-y-2 mb-4 text-sm">
+    <label class="flex gap-2"><input id="upper" type="checkbox" checked> Uppercase</label>
+    <label class="flex gap-2"><input id="lower" type="checkbox" checked> Lowercase</label>
+    <label class="flex gap-2"><input id="number" type="checkbox" checked> Numbers</label>
+    <label class="flex gap-2"><input id="symbol" type="checkbox"> Symbols</label>
+  </div>
+
+  <!-- Strength -->
+  <p id="strength" class="text-sm mb-3">Strength: Medium</p>
+
+  <!-- Generate -->
+  <button onclick="generatePassword()"
+    class="w-full bg-blue-600 hover:bg-blue-500 py-2 rounded">
+    Generate Password
+  </button>
+
+</div>
+
+<script>
+  const passwordEl = document.getElementById("password");
+  const lengthEl = document.getElementById("length");
+  const lengthValue = document.getElementById("lengthValue");
+  const strengthEl = document.getElementById("strength");
+
+  function updateLength() {
+    lengthValue.textContent = lengthEl.value;
+  }
+
+  function generatePassword() {
+    const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const lower = "abcdefghijklmnopqrstuvwxyz";
+    const numbers = "0123456789";
+    const symbols = "!@#$%^&*()_+[]{}<>?";
+
+    let chars = "";
+    if (document.getElementById("upper").checked) chars += upper;
+    if (document.getElementById("lower").checked) chars += lower;
+    if (document.getElementById("number").checked) chars += numbers;
+    if (document.getElementById("symbol").checked) chars += symbols;
+
+    if (!chars) {
+      passwordEl.value = "";
+      strengthEl.textContent = "Select at least one option!";
+      return;
+    }
+
+    let password = "";
+    for (let i = 0; i < lengthEl.value; i++) {
+      const randomIndex = Math.floor(Math.random() * chars.length);
+      password += chars[randomIndex];
+    }
+
+    passwordEl.value = password;
+    updateStrength();
+  }
+
+  function updateStrength() {
+    const len = lengthEl.value;
+    let strength = "Weak";
+
+    if (len >= 12) strength = "Medium";
+    if (len >= 16) strength = "Strong";
+
+    strengthEl.textContent = "Strength: " + strength;
+  }
+
+  function copyPassword() {
+    navigator.clipboard.writeText(passwordEl.value);
+    alert("Password Copied!");
+  }
+
+  updateLength();
+</script>
+
+</body>
+</html>
