@@ -16,7 +16,7 @@ function updateColor(){
     }
 }
 
-updateColor();
+
 
 increaseBtn.addEventListener("click",()=>{
     count+=1;
@@ -76,3 +76,5 @@ fiveDecrease.addEventListener("click",()=>{
 })
 
 
+
+updateColor();

@@ -3,42 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Password Generator</title>
     <link rel="stylesheet" href="/src/output.css">
 </head>
-<body class="bg-slate-900 text-white min-h-screen flex justify-center items-center  ">
-    
-    <div class="w-[360px]  bg-slate-800  p-6 shadow-xl rounded-xl ">
-        <h1 class="text-center text-2xl font-bold mb-4">Password Generator</h1>
+<body class="bg-slate-900 text-white min-h-screen flex justify-center items-center">
 
+    <div class=" bg-slate-800 w-[360px]  rounded-xl shadow-xl p-6">
+        <h1 class="text-center text-2xl font-bold mb-4 ">Password Generator</h1>
+
+        <!-- input and copy button -->
         <div class="flex mb-3">
-            <input id="password" type="text" class="bg-white text-black text-xl rounded-l px-3 py-2 flex-1  outline-none transition-all duration-300 ease-in-out" readonly>
-            <button class="bg-green-600 px-3  rounded-r  font-bold hover:bg-green-600 hover:scale-103 " onclick="copyPassword()">Copy</button>
+            <input id="password" type="text"  class="flex-1 px-4 py-2 bg-white outline-none rounded-l hover:scale-103 text-black" readonly>
+            <button class="bg-green-600 px-4 rounded-r hover:scale-103 font-bold" onclick="copyPassword()">Copy</button>
         </div>
 
         <div class="mb-4">
-            <label >Password Length: <span id="lengthValue">12</span></label>
-            <input id="length"  type="range" min="4" max="32" value="12" class="w-full" oninput="updateLength()" >
+            <p class="mb-2">Password Length: <span id="length">12</span></p>
+            <input id="lengthVal" type="range" class="w-full" max="32" min="4" value="12" oninput="updateLength()">
         </div>
 
-        <div class=" flex flex-col space-y-2 mb-4 text-sm">
-            <label class="flex gap-2"> <input  id="upper" type="checkbox" checked>Uppercase</label>
-            <label class="flex gap-2" ><input id="lower" type="checkbox" checked>Lowercase</label>
-            <label class="flex gap-2" > <input id="number" type="checkbox" checked>Numbers</label>
-            <label class="flex gap-2" ><input id="symbol" type="checkbox" >Symbols</label>
-
+        <div class="flex flex-col space-y-2 mb-4">
+            <label ><input type="checkbox"  id="upper" checked> Uppercase</label>
+            <label ><input type="checkbox"  id="lower" checked> Lowercase</label>
+            <label ><input type="checkbox"  id="number" checked> Numbers</label>
+            <label ><input type="checkbox"  id="symbol"> Symbols</label>
         </div>
-        
 
-        <p class="text-m mb-3" id="strength">Strength:Medium</p>
-
-        <button class="w-full bg-blue-600 hover:bg-blue-500 py-2 rounded text-lg" onclick="generatePassword()">Generate Password</button>
-
+        <div class="space-y-2">
+            <p id="strength">Strength:Medium</p>
+            <button class="w-full bg-green-600 text-xl font-bold py-2 rounded-xl" onclick="generatePassword()">Generate Password</button>
+        </div>
     </div>
 
 
 
-
-    <script src="scripts.js"></script>
+<script src="scripts.js"></script>
 </body>
 </html>
