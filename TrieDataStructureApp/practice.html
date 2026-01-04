@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trie Data Structure</title>
+     <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    
+    <body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h1 class="text-2xl font-bold mb-6 text-center">Trie Operations</h1>
+        
+        <div class="mb-4">
+            <label for="wordInput" class="block text-sm font-medium text-gray-700">Enter Word/Prefix:</label>
+            <input type="text" id="wordInput" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4 mb-6">
+            <button onclick="insertWord()" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Insert Word</button>
+            <button onclick="searchWord()" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">Search Word</button>
+            <button onclick="prefixSearch()" class="bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600">Prefix Search</button>
+            <button onclick="deleteWord()" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">Delete Word</button>
+        </div>
+        
+        <div class="mb-6">
+            <button onclick="displayAllWords()" class="w-full bg-indigo-500 text-white py-2 px-4 rounded hover:bg-indigo-600">Display All Words</button>
+        </div>
+        
+        <div id="result" class="text-center text-lg font-semibold text-gray-800"></div>
+        
+        <ul id="wordList" class="mt-4 list-disc list-inside"></ul>
+    </div>
+
+
+    <script>
+        class TrieNode {
+            constructor() {
+                this.children = {};
+                this.isEndOfWord = false;
+            }
+        }
+
+        class Trie {
+            constructor() {
+                this.root = new TrieNode();
+            }
+
+            insert(word) {
+                let node = this.root;
+                for (let char of word.toLowerCase()) {
+                    if (!node.children[char]) {
+                        node.children[char] = new TrieNode();
+                    }
+                    node = node.children[char];
+                }
+                node.isEndOfWord = true;
+            }
+
+            search(word) {
+                let node = this.root;
+                for (let char of word.toLowerCase()) {
+                    if (!node.children[char]) {
+                        return false;
+                    }
+                    node = node.children[char];
+                }
+                return node.isEndOfWord;
+            }
+
+            startsWith(prefix) {
+                let node = this.root;
+                for (let char of prefix.toLowerCase()) {
+                    if (!node.children[char]) {
+                        return false;
+                    }
+                    node = node.children[char];
+                }
+                return true;
+            }
+
+            delete(word) {
+                const deleteRecursively = (node, word, index) => {
+                    if (index === word.length) {
+                        if (!node.isEndOfWord) return false;
+                        node.isEndOfWord = false;
+                        return Object.keys(node.children).length === 0;
+                    }
+
+                    const char = word[index].toLowerCase();
+                    if (!node.children[char]) return false;
+
+                    const shouldDeleteChild = deleteRecursively(node.children[char], word, index + 1);
+
+                    if (shouldDeleteChild) {
+                        delete node.children[char];
+                        return Object.keys(node.children).length === 0 && !node.isEndOfWord;
+                    }
+                    return false;
+                };
+
+                deleteRecursively(this.root, word.toLowerCase(), 0);
+            }
+
+            getAllWords() {
+                const words = [];
+                const collectWords = (node, currentWord) => {
+                    if (node.isEndOfWord) {
+                        words.push(currentWord);
+                    }
+                    for (let char in node.children) {
+                        collectWords(node.children[char], currentWord + char);
+                    }
+                };
+                collectWords(this.root, '');
+                return words;
+            }
+        }
+
+        const trie = new Trie();
+        const resultDiv = document.getElementById('result');
+        const wordList = document.getElementById('wordList');
+        const wordInput = document.getElementById('wordInput');
+
+        function showResult(message, color = 'text-gray-800') {
+            resultDiv.className = `text-center text-lg font-semibold ${color}`;
+            resultDiv.textContent = message;
+            wordList.innerHTML = ''; // Clear word list unless displaying all
+        }
+
+        function insertWord() {
+            const word = wordInput.value.trim();
+            if (word) {
+                trie.insert(word);
+                showResult(`Word "${word}" inserted successfully.`, 'text-green-600');
+            } else {
+                showResult('Please enter a word.', 'text-red-600');
+            }
+        }
+
+        function searchWord() {
+            const word = wordInput.value.trim();
+            if (word) {
+                const found = trie.search(word);
+                showResult(`Word "${word}" ${found ? 'found' : 'not found'}.`, found ? 'text-green-600' : 'text-red-600');
+            } else {
+                showResult('Please enter a word.', 'text-red-600');
+            }
+        }
+
+        function prefixSearch() {
+            const prefix = wordInput.value.trim();
+            if (prefix) {
+                const exists = trie.startsWith(prefix);
+                showResult(`Prefix "${prefix}" ${exists ? 'exists' : 'does not exist'}.`, exists ? 'text-green-600' : 'text-red-600');
+            } else {
+                showResult('Please enter a prefix.', 'text-red-600');
+            }
+        }
+
+        function deleteWord() {
+            const word = wordInput.value.trim();
+            if (word) {
+                trie.delete(word);
+                showResult(`Word "${word}" deleted if it existed.`, 'text-green-600');
+            } else {
+                showResult('Please enter a word.', 'text-red-600');
+            }
+        }
+
+        function displayAllWords() {
+            const words = trie.getAllWords();
+            showResult(words.length > 0 ? 'Current words in Trie:' : 'Trie is empty.', 'text-gray-800');
+            wordList.innerHTML = '';
+            words.forEach(word => {
+                const li = document.createElement('li');
+                li.textContent = word;
+                wordList.appendChild(li);
+            });
+        }
+    </script>
+
+
+
+
+
+
+</body>
+</html>
