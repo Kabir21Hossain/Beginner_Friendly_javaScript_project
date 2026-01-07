@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="src/output.css">
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+
+</head>
+
+<body class="bg-gray-100 min-h-screen flex flex-col justify-center items-center p-4">
+
+    <header class="w-full max-w-4xl  bg-blue-600 text-white p-6 rounded-t-lg shadow-md">
+        <h1 class="font-bold text-3xl text-center">United Nations COVID-19 Health Survey</h1>
+        <p class="text-center mt-2">Collect data on health impacts and antiviral usage across countries during the
+            coronavirus pandemic.</p>
+    </header>
+
+    <main class="w-full max-w-4xl p-8 shadow-md bg-white rounded-b-lg  ">
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-4 ">About This Project</h2>
+            <p>This is multifunctional web project built with HTML,CSS(via Tailwind),and JavaScript. It demonstrates
+                various form features including
+                inputs,selects,checkboxes,radios,textareas,validation,dynamic elements and more.
+                The theme focuses on a UN survey for COVID-19 health,data,including antiviral information from different
+                countries.</p>
+
+            <p class="mb-1 mt-2">Features include:</p>
+
+            <ul class="list list-disc list-inside pl-6">
+                <li>Multiple form types(user info,survey submission)</li>
+                <li>Form validation(required field,patterns,min/max)</li>
+                <li>Dynamic form elements(add/remove antiviral entries)</li>
+                <li>Local storage for saving and displaying submitted data</li>
+                <li>Accessible and responsive UI with Tailwind CSS</li>
+                <li>Event handling in JavaScript(submit,change,etc)</li>
+            </ul>
+
+        </section>
+
+        <!-- Personal Info -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-4">Step 1: Enter Your Information</h2>
+
+            <form class="space-y-4" id="userForm">
+                <fieldset class="border border-gray-400 p-4 rounded hover:scale-102">
+                    <legend class="text-lg font-medium">Personal Details</legend>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- name -->
+                        <div>
+                            <label for="fullName" class="block text-sm font-medium text-gray-700">Full Name</label>
+
+                            <input type="text" id="fullName" name="fullName" placeholder="kabir" required
+                                class="p-2 block mt-1 w-full border-gray-30 shadow-sm rounded-md focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+
+                        </div>
+
+                        <!-- phone -->
+
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                            <input type="tel" name="phone" id="phone" placeholder="+1-123-456-7890"
+                                title="Enter a valid phone number" pattern="[+]?[0-9]{1,3}{3}-?[0-9]{3}-?[0-9]{4}"
+                                class="p-2 block mt-1 w-full border-gray-30 shadow-sm rounded-md focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        </div>
+
+
+                        <!-- url -->
+                        <div>
+                            <label for="website" class="block text-sm font-medium text-gray-700">Personal
+                                Website(optional)</label>
+                            <input type="url" name="website" id="website" placeholder="https://example.com"
+                                class="p-2 block mt-1 w-full border-gray-30 shadow-sm rounded-md focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+
+                        </div>
+
+                        <!-- email -->
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                            <input type="email" name="email" id="email" placeholder="kabir20304@gmail.com" required
+                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Enter a valid email"
+                                class="p-2 block mt-1 w-full border-gray-30 shadow-sm rounded-md focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        </div>
+
+                        <!-- password input -->
+                        <div>
+                            <label for="password" class="block text-sm font-medium text-gray-700">Password(for
+                                demo)</label>
+                            <input type="password" name="password" id="password" minlength="8" required
+                                class="p-2 block mt-1 w-full border-gray-30 shadow-sm rounded-md focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        </div>
+
+                    </div>
+
+
+                </fieldset>
+
+
+                <button type="submit"
+                    class="bg-blue-500 px-4 py-2 text-white rounded hover:bg-blue-600 hover:scale-102">Save User
+                    Info</button>
+                <button type="reset"
+                    class="bg-gray-500 px-4 py-2 text-white rounded hover:bg-gray-600 ml-2 hover:scale-102">Reset</button>
+
+
+            </form>
+
+        </section>
+
+        <!-- survey form -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-4">Step 2: Submit Survey Data</h2>
+
+            <form id="surveyForm" class="space-y-4">
+
+                <fieldset class="border border-gray-300 rounded p-4 hover:scale-102">
+                    <legend class="text-lg font-medium">Survey Details</legend>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
+                            <select name="country" id="country" required
+                                class="block w-full p-2 rounded mt-1 border-gray-300 shadow-sm focus:ring-blue-600 focus:border-blue-600 sm:text-sm">
+                                <option value="">Select a Country</option>
+
+                                <optgroup label="North America">
+                                    <option value="USA">USA</option>
+                                    <option value="Canada">Canada</option>
+                                </optgroup>
+
+                                <optgroup label="Europe">
+                                    <option value="UK">UK</option>
+                                    <option value="Germany">Germany</option>
+                                </optgroup>
+
+                                <optgroup label="Asia">
+                                    <option value="India">India</option>
+                                    <option value="Bangladesh">Bangladesh</option>
+                                    <option value="Pakistan">Pakistan</option>
+                                </optgroup>
+                            </select>
+
+                        </div>
+
+                        <div>
+                            <label for="surveyDate" class="block text-gray-700 font-medium text-sm">Survey Date</label>
+                            <input type="date" name="surveyDate" id="surveyDate" required min="2020-01-01"
+                                max="2026-01-05" placeholder="mm/dd/yyyy"
+                                class="mt-1 w-full block border-none shadow-sm rounded p-2 border-gray-300 focus:ring-blue-600 focus:border-blue-600 ">
+                        </div>
+
+                        <div>
+                            <label for="case" class="block w-full text-gray-700 text-sm">Number of Cases Treated</label>
+                            <input type="number" name="case" id="case" min="0" required step="1"
+                                placeholder="Enter number"
+                                class="mt-1 block w-full border-gray-300 focus:ring-blue-600 focus:border-blue-600 rounded-md shadow-sm sm:text-sm p-2">
+                        </div>
+
+
+
+                        <div>
+                            <label for="severity" class="block w-full text-gray-700 text-sm">Average
+                                Severity(1-10)</label>
+                            <input type="range" name="severity" id="severity" min="1" max="10" step="1" value="5"
+                                class="mt-1 w-full block hover:cursor-pointer">
+                            <output for="severity" id="severityValue" class="mt-1 text-sm text-gray-500">5</output>
+                        </div>
+
+                        <!-- radio buttons -->
+                        <div class="md:col-span-2 space-y-1">
+                            <label class="text-gray-700 text-sm block font-medium ">Primary Health Impact</label>
+
+                            <div class="mt-2 space-y-2">
+                                <div class="flex items-center gap-2">
+                                    <input type="radio" name="impact" id="respiratory" value="respiratory" required
+                                    class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded">
+                                    <label for="respiratory" class="block text-sm text-gray-900">Respitory Issues</label>
+                                </div>
+
+                                <div class="flex items-center gap-2">
+                                    <input type="radio" name="impact" id="fatigue" value="fatigue" class="focus:ring-blue-500 h-4 w-4 text-blue-500 border-gray-300 rounded">
+                                    <label for="fatigue" class="block text-sm text-gray-900">Chronic Fatigue</label>
+
+                                </div>
+
+                                <div class="flex items-center gap-2">
+                                    <input type="radio" name="impact" value="other" id="other" class="focus:ring-blue-600 w-4 h-4 text-blue-600 border-gray-300 rounded">
+                                    <label for="other" class="block text-gray-900 text-sm">Other</label>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!-- checkbox -->
+                        <div class="md:col-span-2 space-y-2">
+                            <label class="text-gray-700 text-sm block w-full"> Antivirals Used(Select Multiple)</label>
+
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" name="anti" id="remdesivir" value="remdesivir" class="focus:ring-blue-500 h-4 w-4 text-blue-500 border-gray-300 rounded">
+                                <label for="remdesivir" class="block text-sm text-gray-900">Remdesivir</label>
+
+                            </div>
+
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" name="anti" id="paxlovid" value="paxlovid" 
+                                class="focus:ring-blue-400 w-4 h-4 rounded border-gray-300 text-blue-600 ">
+                                <label for="paxlovid" class="text-gray-900 block text-sm">Paxlovid</label>
+                            </div>
+
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" name="anti" id="molnupiravir" value="molnupiravir"
+                                class="focus:ring-blue-400 w-4 h-4 rounded border-gray-300 text-blue-600">
+                                <label for="molnupiravir" class="text-sm block text-gray-900">Molnupiravir</label>
+                            </div>
+                        </div>
+
+
+                        <!-- datalist -->
+                        <div class="md:col-span-2">
+                            <label for="otherAntiviral" class="block text-sm font-medium text-gray-700">Other Antiviral(Search/Suggest)</label>
+                            <input list="antiviralList" id="otherAntiviral" name="otherAntiviral"
+                                placeholder="Type to search..." class="mt-1 block w-full border-gray-300 p-2 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            <datalist id="antiViralList">
+                                <option value="Favipiravir">
+                                <option value="Oseltamivir">
+                                <option value="Other">
+
+                            </datalist>
+                        </div>
+
+                        <!-- Text area -->
+
+                        <div class="md:col-span-2">
+                            <label for="comment" class="block text-sm text-gray-700 font-medium">Comments on Effectiveness/Side Effects</label>
+                            <textarea name="comment" id="comment" rows="4" required 
+                            placeholder="write comments" class="mt-2 px-4 py-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-600 focus:border-blue-600"></textarea>
+                        </div>
+
+                        <!-- file upload -->
+                        <div class="md:col-span-2 space-y-2">
+                            <label for="file" class="text-gray-700 font-medium text-sm block">Upload Supporting Report(PDF/Image)</label>
+                            <input type="file" name="file" id="file" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                        </div>
+
+                        <!-- color picker -->
+
+                        <div class="space-y-4 ">
+                            <label for="color" class="block text-gray-700 text-sm font-medium">Color Code for Report(optional)</label>
+                            <input type="color" name="color" id="color" value="#ff0000" class="block w-full h-10 border:gray-300  rounded-md shadow-sm ">
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- Dynamic Antiviral Sections -->
+                <section id="dynamicAntivirals" class="space-y-4">
+
+                    <h3 class="text-xl font-medium">Add Custom Antiviral Data </h3>
+                    <!-- dynamically will be added here -->
+                </section>
+
+                <button type="button" id="addAntiViral" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 hover:scale-102">Add Another Antiviral</button>
+                <button type="submit" class="bg-blue-600 px-4 py-2 rounded text-white font-medium hover:scale-102">Submit Survey</button>
+                <button type="reset" class="bg-red-600 px-4 py-2 text-white rounded font-medium hover:bg-red-900 hover:scale-102">Reset</button>
+            </form>
+
+        </section>
+
+        <!-- Display Submitted Data -->
+
+        <section class="mt-8 ">
+            <h2 class="text-2xl font-semibold mb-4 ">Submitted Survey</h2>
+            <div id="submittedData" class="grid grid-cols-1 gap-4"></div>
+            <button id="clearData" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 mt-4 ">Clear All Data</button>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; all copyrights are reserved.</p>
+    </footer>
+</body>
+
+</html>
